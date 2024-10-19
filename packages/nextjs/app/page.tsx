@@ -1,15 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 // import { DynamicContextProvider, UserProfile, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import type { NextPage } from "next";
+import { useStore } from "~~/context/StoreContext";
 
 // import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 // import { Address } from "~~/components/scaffold-eth";
-
 const Home: NextPage = () => {
   const { user } = useDynamicContext();
+  const { login } = useStore();
+  useEffect(() => {
+    if (user) {
+      login("kev@gmail.com", "1235464");
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center">
