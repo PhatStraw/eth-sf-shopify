@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
-import { DynamicContextProvider, DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -61,10 +61,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
             avatar={BlockieAvatar}
             theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
           >
-            <ScaffoldEthApp>
-              <DynamicWidget />
-              {children}
-            </ScaffoldEthApp>
+            <ScaffoldEthApp>{children}</ScaffoldEthApp>
           </RainbowKitProvider>
         </QueryClientProvider>
       </DynamicContextProvider>
