@@ -140,4 +140,59 @@ contract Shopify is Ownable {
 		require(stores[_storeId].owner == msg.sender, "Not the store owner");
 		stores[_storeId].isActive = !stores[_storeId].isActive;
 	}
+
+	function updateItem(
+		uint256 _itemId,
+		string memory _name,
+		uint256 _price,
+		string memory _photoUrl,
+		string memory _description,
+		uint256 _inventory
+	) external {
+		require(
+			stores[items[_itemId].storeId].owner == msg.sender,
+			"Not the store owner"
+		);
+		require(items[_itemId].isActive, "Item is not active");
+
+		Item storage item = items[_itemId];
+		item.name = _name;
+		item.price = _price;
+		item.photoUrl = _photoUrl;
+		item.description = _description;
+		item.inventory = _inventory;
+
+		emit ItemUpdated(
+			_itemId,
+			_name,
+			_price,
+			_photoUrl,
+			_description,
+			_inventory
+		);
+	}
+
+	function purchaseItem(uint256 _itemId, uint256 _quantity) external payable {
+		Item storage item = items[_itemId];
+		require(item.isActive, "Item is not active");
+		require(item.inventory >= _quantity, "Not enough inventory");
+		require(msg.value >= item.price * _quantity, "Insufficient payment");
+
+		item.inventory -= _quantity;
+		address storeOwner = stores[item.storeId].owner;
+
+		// Transfer funds to store owner
+		(bool sent, ) = payable(storeOwner).call{ value: msg.value }("");
+		require(sent, "Failed to send Ether");
+
+		emit ItemPurchased(_itemId, msg.sender, _quantity);
+	}
+
+	function toggleItemActive(uint256 _itemId) external {
+		require(
+			stores[items[_itemId].storeId].owner == msg.sender,
+			"Not the store owner"
+		);
+		items[_itemId].isActive = !items[_itemId].isActive;
+	}
 }

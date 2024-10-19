@@ -117,4 +117,98 @@ describe("Shopify", function () {
       await expect(marketplace.connect(addr2).toggleStoreActive(1)).to.be.revertedWith("Not the store owner");
     });
   });
+
+  describe("Item Management", function () {
+    beforeEach(async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createStore("Test Store", "A test store", IMAGE_URL);
+    });
+
+    it("Should create an item", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await expect(marketplace.connect(addr1).createItem(1, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10))
+        .to.emit(marketplace, "ItemCreated")
+        .withArgs(1, 1, "Test Item", parseEther("1"));
+
+      const item = await marketplace.items(1);
+      expect(item.name).to.equal("Test Item");
+      expect(item.price).to.equal(parseEther("1"));
+      expect(item.photoUrl).to.equal(IMAGE_URL);
+      expect(item.description).to.equal("A test item");
+      expect(item.inventory).to.equal(10);
+      expect(item.isActive).to.be.true;
+    });
+
+    it("Should not create an item with empty name", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await expect(
+        marketplace.connect(addr1).createItem(1, "", parseEther("1"), IMAGE_URL, "A test item", 10),
+      ).to.be.revertedWith("Item name cannot be empty");
+    });
+
+    it("Should not create an item with zero price", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await expect(
+        marketplace.connect(addr1).createItem(1, "Test Item", 0, IMAGE_URL, "A test item", 10),
+      ).to.be.revertedWith("Price must be greater than zero");
+    });
+
+    it("Should not create an item for non-existent store", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await expect(
+        marketplace.connect(addr1).createItem(999, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10),
+      ).to.be.revertedWith("Not the store owner");
+    });
+
+    it("Should update an item", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createItem(1, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10);
+      await expect(
+        marketplace.connect(addr1).updateItem(1, "Updated Item", parseEther("2"), IMAGE_URL, "An updated item", 20),
+      )
+        .to.emit(marketplace, "ItemUpdated")
+        .withArgs(1, "Updated Item", parseEther("2"), IMAGE_URL, "An updated item", 20);
+
+      const item = await marketplace.items(1);
+      expect(item.name).to.equal("Updated Item");
+      expect(item.price).to.equal(parseEther("2"));
+      expect(item.description).to.equal("An updated item");
+      expect(item.inventory).to.equal(20);
+    });
+
+    it("Should not allow non-owner to update item", async function () {
+      const [, addr1, addr2] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createItem(1, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10);
+      await expect(
+        marketplace.connect(addr2).updateItem(1, "Hacked Item", parseEther("0.1"), IMAGE_URL, "A hacked item", 100),
+      ).to.be.revertedWith("Not the store owner");
+    });
+
+    it("Should toggle item active status", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createItem(1, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10);
+      await marketplace.connect(addr1).toggleItemActive(1);
+      let item = await marketplace.items(1);
+      expect(item.isActive).to.be.false;
+
+      await marketplace.connect(addr1).toggleItemActive(1);
+      item = await marketplace.items(1);
+      expect(item.isActive).to.be.true;
+    });
+
+    it("Should not allow non-owner to toggle item active status", async function () {
+      const [, addr1, addr2] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createItem(1, "Test Item", parseEther("1"), IMAGE_URL, "A test item", 10);
+      await expect(marketplace.connect(addr2).toggleItemActive(1)).to.be.revertedWith("Not the store owner");
+    });
+  });
 });
