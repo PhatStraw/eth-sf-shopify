@@ -4174,6 +4174,7 @@ __metadata:
     react-dom: ^18.3.1
     react-hot-toast: ^2.4.0
     tailwindcss: ^3.4.11
+    tuskscript: ^0.0.3
     type-fest: ^4.26.1
     typescript: 5.5.3
     usehooks-ts: ^3.1.0
@@ -17691,6 +17692,13 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"tuskscript@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "tuskscript@npm:0.0.3"
+  checksum: 547bdd289df6c5b6208ba54f8f95093024873e1936dd483e44c3e8356597eb7d066732e2cdde0bcd5990eb3a62b83bd834a043be66b044314f4a43c535d9b142
   languageName: node
   linkType: hard
 
