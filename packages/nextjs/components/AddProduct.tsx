@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStore } from "~~/context/StoreContext";
 
-const AddProduct: React.FC = () => {
+const AddProduct: React.FC<{ onProductAdded: () => void }> = ({ onProductAdded }) => {
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -24,6 +24,7 @@ const AddProduct: React.FC = () => {
         id: "32132",
       });
       setProduct({ name: "", description: "", price: "", image: "" });
+      onProductAdded();
     }
   };
 
