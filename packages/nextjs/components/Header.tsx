@@ -6,7 +6,7 @@ import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 export const Header = () => {
   return (
-    <div className="sticky top-0 navbar bg-black shadow-md px-4 flex justify-between items-center">
+    <div className="sticky top-0 navbar shadow-md px-4 flex justify-between items-center">
       <div className="flex items-center">
         <div className="lg:hidden">
           {/* <label tabIndex={0} className="btn btn-ghost" onClick={() => setIsDrawerOpen(prev => !prev)}>

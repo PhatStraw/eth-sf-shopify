@@ -9,24 +9,24 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: "#93BBFB",
-          "primary-content": "#212638",
-          secondary: "#DAE8FF",
-          "secondary-content": "#212638",
-          accent: "#93BBFB",
-          "accent-content": "#212638",
-          neutral: "#212638",
-          "neutral-content": "#ffffff",
+          primary: "#007bff",
+          "primary-content": "#ffffff",
+          secondary: "#6c757d",
+          "secondary-content": "#ffffff",
+          accent: "#28a745",
+          "accent-content": "#ffffff",
+          neutral: "#f8f9fa",
+          "neutral-content": "#212529",
           "base-100": "#ffffff",
-          "base-200": "#f4f8ff",
-          "base-300": "#DAE8FF",
-          "base-content": "#212638",
-          info: "#93BBFB",
-          success: "#34EEB6",
-          warning: "#FFCF72",
-          error: "#FF8863",
+          "base-200": "#f1f1f1",
+          "base-300": "#e9ecef",
+          "base-content": "#212529",
+          info: "#17a2b8",
+          success: "#28a745",
+          warning: "#ffc107",
+          error: "#dc3545",
 
-          "--rounded-btn": "9999rem",
+          "--rounded-btn": "0.25rem",
 
           ".tooltip": {
             "--tooltip-tail": "6px",
@@ -41,24 +41,24 @@ module.exports = {
       },
       {
         dark: {
-          primary: "#212638",
-          "primary-content": "#F9FBFF",
-          secondary: "#323f61",
-          "secondary-content": "#F9FBFF",
-          accent: "#4969A6",
-          "accent-content": "#F9FBFF",
-          neutral: "#F9FBFF",
-          "neutral-content": "#385183",
-          "base-100": "#385183",
-          "base-200": "#2A3655",
-          "base-300": "#212638",
-          "base-content": "#F9FBFF",
-          info: "#385183",
-          success: "#34EEB6",
-          warning: "#FFCF72",
-          error: "#FF8863",
+          primary: "#000000", // Black
+          "primary-content": "#ffffff", // White
+          secondary: "#28a745", // Green
+          "secondary-content": "#ffffff", // White
+          accent: "#ffffff", // White
+          "accent-content": "#000000", // Black
+          neutral: "#1a1a1a", // Darker Black
+          "neutral-content": "#f0f0f0", // Light Gray
+          "base-100": "#ffffff", // White
+          "base-200": "#f8f9fa", // Light Gray
+          "base-300": "#e0e0e0", // Gray
+          "base-content": "#000000", // Black
+          info: "#17a2b8", // Info Color
+          success: "#28a745", // Green
+          warning: "#ffc107", // Warning Color
+          error: "#dc3545", // Error Color
 
-          "--rounded-btn": "9999rem",
+          "--rounded-btn": "0.25rem",
 
           ".tooltip": {
             "--tooltip-tail": "6px",
