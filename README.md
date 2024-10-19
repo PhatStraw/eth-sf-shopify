@@ -1,4 +1,10 @@
-# 🏗 Scaffold-ETH 2
+# Shopify On chain
+
+Stack
+
+- Walrus file hosting 
+- Flow blockchain
+- Dynamic Wallet
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |

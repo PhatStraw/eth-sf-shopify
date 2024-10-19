@@ -49,6 +49,11 @@ const config: HardhatUserConfig = {
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
     },
+    testnet: {
+      url: "https://testnet.evm.nodes.onflow.org",
+      accounts: [process.env.FLOW_DEPLOYER!], // In practice, this should come from an environment variable and not be commited
+      gas: 500000, // Example gas limit
+    },
     mainnet: {
       url: `https://cloudflare-eth.com`,
       accounts: [deployerPrivateKey],
