@@ -1,71 +1,50 @@
-"use client";
-
+import React from "react";
 import Link from "next/link";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import Cards from "~~/components/ui/Cards";
 
-const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
-
+const HomePage: NextPage = () => {
   return (
-    <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
+      <main className="container mx-auto px-4 py-16 text-center">
+        <h1 className="text-5xl font-bold mb-8 text-blue-800">Welcome to ETHical Shops</h1>
+        <p className="text-xl mb-12 text-gray-700">
+          The decentralized marketplace for ethical and sustainable businesses
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4 text-blue-600">For Shop Owners</h2>
+            <p className="mb-4">Create and manage your ethical shop with ease using blockchain technology</p>
+            <Link
+              href="/create-shop"
+              className="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+            >
+              Create Your Shop
+            </Link>
           </div>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4 text-blue-600">For Shoppers</h2>
+            <p className="mb-4">Discover and support ethical businesses from around the world</p>
+            <Link
+              href="/browse-shops"
+              className="inline-block bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-colors"
+            >
+              Browse Shops
+            </Link>
           </div>
         </div>
-      </div>
-    </>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-blue-600">Why ETHical Shops?</h2>
+          <div className="flex flex-row gap-4">
+            <Cards text="Decentralized and transparent marketplace" />
+            <Cards text="Support for ethical and sustainable businesses" />
+            <Cards text="Secure transactions using blockchain technology" />
+            <Cards text="Global reach for local artisans and producers" />
+          </div>
+        </div>
+      </main>
+    </div>
   );
 };
 
-export default Home;
+export default HomePage;
