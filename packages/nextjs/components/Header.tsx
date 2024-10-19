@@ -3,10 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { useStore } from "~~/context/StoreContext";
 
 export const Header = () => {
+  const { currentUser } = useStore();
+
   return (
-    <div className="sticky top-0 navbar shadow-md px-4 flex justify-between items-center">
+    <div className="sticky top-0 navbar bg-blue-300 shadow-md px-4 flex justify-between items-center z-10">
       <div className="flex items-center">
         <div className="lg:hidden">
           {/* <label tabIndex={0} className="btn btn-ghost" onClick={() => setIsDrawerOpen(prev => !prev)}>
@@ -19,6 +22,7 @@ export const Header = () => {
         </Link>
       </div>
       <div className="navbar-end">
+        <div className="text-lg pr-4">{currentUser && currentUser.store?.name}</div>
         <DynamicWidget />
       </div>
     </div>

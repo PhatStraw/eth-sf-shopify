@@ -24,9 +24,9 @@ const AdminPage: React.FC = () => {
   const storeUrl = `${window.location.origin}/store/${currentUser.store.id}`;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto pt-6">
       <h1 className="text-3xl font-bold mb-6">Store Admin Dashboard</h1>
-      <div className=" shadow-md rounded-lg p-6 mb-6">
+      <div className=" shadow-md rounded-lg p-6 mb-6 bg-blue-300">
         <h2 className="text-2xl font-semibold mb-4">Store Information</h2>
         <p className="mb-2">
           <strong>Store Name:</strong> {currentUser.store.name}
@@ -39,17 +39,17 @@ const AdminPage: React.FC = () => {
         </p>
         <Link
           href={`/store/${currentUser.store.id}`}
-          className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
+          className="bg-blue-500 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
         >
-          Copy Store URL
+          Go to Store
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className=" shadow-md rounded-lg p-6">
+        <div className=" shadow-md rounded-lg p-6 bg-blue-300">
           <h2 className="text-2xl font-semibold mb-4">Add New Product</h2>
           <AddProduct />
         </div>
-        <div className=" shadow-md rounded-lg p-6">
+        <div className=" shadow-md rounded-lg p-6 bg-blue-300">
           <h2 className="text-2xl font-semibold mb-4">Manage Products</h2>
           <ProductManagement />
         </div>

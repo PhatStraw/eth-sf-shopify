@@ -51,7 +51,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
     <WagmiProvider config={wagmiConfig}>
       <DynamicContextProvider
         settings={{
-          environmentId: "40b79e9a-cf18-495d-8d6c-567f20f65dc5",
+          environmentId: "57bca674-bac8-42ff-9645-bba010273e3f",
           walletConnectors: [EthereumWalletConnectors],
         }}
       >
