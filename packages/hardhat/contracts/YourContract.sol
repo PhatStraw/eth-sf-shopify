@@ -195,4 +195,16 @@ contract Shopify is Ownable {
 		);
 		items[_itemId].isActive = !items[_itemId].isActive;
 	}
+
+	function getStoresByOwner(
+		address _owner
+	) external view returns (uint256[] memory) {
+		return userStores[_owner];
+	}
+
+	function getItemsByStore(
+		uint256 _storeId
+	) external view returns (uint256[] memory) {
+		return storeItems[_storeId];
+	}
 }
