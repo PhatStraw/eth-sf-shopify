@@ -44,7 +44,8 @@
     "node": ">=18.18.0"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
-    "tuskscript": "^0.0.3"
+    "@dynamic-labs/ethereum": "^3.4.2",
+    "@dynamic-labs/sdk-react-core": "^3.4.2",
+    "viem": "^2.21.29"
   }
 }

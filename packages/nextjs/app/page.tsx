@@ -10,7 +10,7 @@ import { useStore } from "~~/context/StoreContext";
 
 // import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 // import { Address } from "~~/components/scaffold-eth";
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   const { user } = useDynamicContext();
   const { login } = useStore();
   useEffect(() => {
@@ -40,4 +40,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default HomePage;
