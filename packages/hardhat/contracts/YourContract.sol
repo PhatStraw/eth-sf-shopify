@@ -118,4 +118,26 @@ contract Shopify is Ownable {
 		emit ItemCreated(newItemId, _storeId, _name, _price);
 		_itemIdCounter++;
 	}
+
+	function updateStore(
+		uint256 _storeId,
+		string memory _name,
+		string memory _description,
+		string memory _coverPhotoUrl
+	) external {
+		require(stores[_storeId].owner == msg.sender, "Not the store owner");
+		require(stores[_storeId].isActive, "Store is not active");
+
+		Store storage store = stores[_storeId];
+		store.name = _name;
+		store.description = _description;
+		store.coverPhotoUrl = _coverPhotoUrl;
+
+		emit StoreUpdated(_storeId, _name, _description, _coverPhotoUrl);
+	}
+
+	function toggleStoreActive(uint256 _storeId) external {
+		require(stores[_storeId].owner == msg.sender, "Not the store owner");
+		stores[_storeId].isActive = !stores[_storeId].isActive;
+	}
 }

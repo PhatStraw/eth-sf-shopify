@@ -66,5 +66,55 @@ describe("Shopify", function () {
         "Store name cannot be empty",
       );
     });
+
+    it("Should update a store", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createStore("Test Store", "A test store", IMAGE_URL);
+      await expect(marketplace.connect(addr1).updateStore(1, "Updated Store", "An updated store", IMAGE_URL))
+        .to.emit(marketplace, "StoreUpdated")
+        .withArgs(1, "Updated Store", "An updated store", IMAGE_URL);
+
+      const store = await marketplace.stores(1);
+      expect(store.name).to.equal("Updated Store");
+      expect(store.description).to.equal("An updated store");
+    });
+
+    it("Should not allow non-owner to update store", async function () {
+      const [, addr1, addr2] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createStore("Test Store", "A test store", IMAGE_URL);
+      await expect(
+        marketplace.connect(addr2).updateStore(1, "Hacked Store", "A hacked store", IMAGE_URL),
+      ).to.be.revertedWith("Not the store owner");
+    });
+
+    it("Should not allow updating non-existent store", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await expect(
+        marketplace.connect(addr1).updateStore(999, "Non-existent Store", "This store doesn't exist", IMAGE_URL),
+      ).to.be.revertedWith("Not the store owner");
+    });
+
+    it("Should toggle store active status", async function () {
+      const [, addr1] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createStore("Test Store", "A test store", IMAGE_URL);
+      await marketplace.connect(addr1).toggleStoreActive(1);
+      let store = await marketplace.stores(1);
+      expect(store.isActive).to.be.false;
+
+      await marketplace.connect(addr1).toggleStoreActive(1);
+      store = await marketplace.stores(1);
+      expect(store.isActive).to.be.true;
+    });
+
+    it("Should not allow non-owner to toggle store active status", async function () {
+      const [, addr1, addr2] = await ethers.getSigners();
+
+      await marketplace.connect(addr1).createStore("Test Store", "A test store", IMAGE_URL);
+      await expect(marketplace.connect(addr2).toggleStoreActive(1)).to.be.revertedWith("Not the store owner");
+    });
   });
 });
