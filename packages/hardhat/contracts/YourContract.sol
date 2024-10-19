@@ -3,85 +3,196 @@ pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
+contract Shopify is Ownable {
+	uint256 private _storeIdCounter = 1;
+	uint256 private _itemIdCounter = 1;
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
-contract YourContract {
-	// State Variables
-	address public immutable owner;
-	string public greeting = "Building Unstoppable Apps!!!";
-	bool public premium = false;
-	uint256 public totalCounter = 0;
-	mapping(address => uint) public userGreetingCounter;
+	struct Store {
+		uint256 id;
+		address owner;
+		string name;
+		string description;
+		string coverPhotoUrl;
+		bool isActive;
+	}
 
-	// Events: a way to emit log statements from smart contract that can be listened to by external parties
-	event GreetingChange(
-		address indexed greetingSetter,
-		string newGreeting,
-		bool premium,
-		uint256 value
+	struct Item {
+		uint256 id;
+		uint256 storeId;
+		string name;
+		uint256 price;
+		string photoUrl;
+		string description;
+		uint256 inventory;
+		bool isActive;
+	}
+
+	mapping(uint256 => Store) public stores;
+	mapping(uint256 => Item) public items;
+	mapping(address => uint256[]) public userStores;
+	mapping(uint256 => uint256[]) public storeItems;
+
+	event StoreCreated(
+		uint256 indexed storeId,
+		address indexed owner,
+		string name
+	);
+	event StoreUpdated(
+		uint256 indexed storeId,
+		string name,
+		string description,
+		string coverPhotoUrl
+	);
+	event ItemCreated(
+		uint256 indexed itemId,
+		uint256 indexed storeId,
+		string name,
+		uint256 price
+	);
+	event ItemUpdated(
+		uint256 indexed itemId,
+		string name,
+		uint256 price,
+		string photoUrl,
+		string description,
+		uint256 inventory
+	);
+	event ItemPurchased(
+		uint256 indexed itemId,
+		address indexed buyer,
+		uint256 quantity
 	);
 
-	// Constructor: Called once on contract deployment
-	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
-	constructor(address _owner) {
-		owner = _owner;
-	}
+	constructor() Ownable(msg.sender) {}
 
-	// Modifier: used to define a set of rules that must be met before or after a function is executed
-	// Check the withdraw() function
-	modifier isOwner() {
-		// msg.sender: predefined variable that represents address of the account that called the current function
-		require(msg.sender == owner, "Not the Owner");
-		_;
-	}
+	function createStore(
+		string memory _name,
+		string memory _description,
+		string memory _coverPhotoUrl
+	) external {
+		require(bytes(_name).length > 0, "Store name cannot be empty");
 
-	/**
-	 * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
-	 *
-	 * @param _newGreeting (string memory) - new greeting to save on the contract
-	 */
-	function setGreeting(string memory _newGreeting) public payable {
-		// Print data to the hardhat chain console. Remove when deploying to a live network.
-		console.log(
-			"Setting new greeting '%s' from %s",
-			_newGreeting,
-			msg.sender
+		uint256 newStoreId = _storeIdCounter;
+		stores[newStoreId] = Store(
+			newStoreId,
+			msg.sender,
+			_name,
+			_description,
+			_coverPhotoUrl,
+			true
 		);
+		userStores[msg.sender].push(newStoreId);
 
-		// Change state variables
-		greeting = _newGreeting;
-		totalCounter += 1;
-		userGreetingCounter[msg.sender] += 1;
-
-		// msg.value: built-in global variable that represents the amount of ether sent with the transaction
-		if (msg.value > 0) {
-			premium = true;
-		} else {
-			premium = false;
-		}
-
-		// emit: keyword used to trigger an event
-		emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, msg.value);
+		emit StoreCreated(newStoreId, msg.sender, _name);
+		_storeIdCounter++;
 	}
 
-	/**
-	 * Function that allows the owner to withdraw all the Ether in the contract
-	 * The function can only be called by the owner of the contract as defined by the isOwner modifier
-	 */
-	function withdraw() public isOwner {
-		(bool success, ) = owner.call{ value: address(this).balance }("");
-		require(success, "Failed to send Ether");
+	function createItem(
+		uint256 _storeId,
+		string memory _name,
+		uint256 _price,
+		string memory _photoUrl,
+		string memory _description,
+		uint256 _inventory
+	) external {
+		require(stores[_storeId].owner == msg.sender, "Not the store owner");
+		require(stores[_storeId].isActive, "Store is not active");
+		require(bytes(_name).length > 0, "Item name cannot be empty");
+		require(_price > 0, "Price must be greater than zero");
+
+		uint256 newItemId = _itemIdCounter;
+		items[newItemId] = Item(
+			newItemId,
+			_storeId,
+			_name,
+			_price,
+			_photoUrl,
+			_description,
+			_inventory,
+			true
+		);
+		storeItems[_storeId].push(newItemId);
+
+		emit ItemCreated(newItemId, _storeId, _name, _price);
+		_itemIdCounter++;
 	}
 
-	/**
-	 * Function that allows the contract to receive ETH
-	 */
-	receive() external payable {}
+	function updateStore(
+		uint256 _storeId,
+		string memory _name,
+		string memory _description,
+		string memory _coverPhotoUrl
+	) external {
+		require(stores[_storeId].owner == msg.sender, "Not the store owner");
+		require(stores[_storeId].isActive, "Store is not active");
+
+		Store storage store = stores[_storeId];
+		store.name = _name;
+		store.description = _description;
+		store.coverPhotoUrl = _coverPhotoUrl;
+
+		emit StoreUpdated(_storeId, _name, _description, _coverPhotoUrl);
+	}
+
+	function toggleStoreActive(uint256 _storeId) external {
+		require(stores[_storeId].owner == msg.sender, "Not the store owner");
+		stores[_storeId].isActive = !stores[_storeId].isActive;
+	}
+
+	function updateItem(
+		uint256 _itemId,
+		string memory _name,
+		uint256 _price,
+		string memory _photoUrl,
+		string memory _description,
+		uint256 _inventory
+	) external {
+		require(
+			stores[items[_itemId].storeId].owner == msg.sender,
+			"Not the store owner"
+		);
+		require(items[_itemId].isActive, "Item is not active");
+
+		Item storage item = items[_itemId];
+		item.name = _name;
+		item.price = _price;
+		item.photoUrl = _photoUrl;
+		item.description = _description;
+		item.inventory = _inventory;
+
+		emit ItemUpdated(
+			_itemId,
+			_name,
+			_price,
+			_photoUrl,
+			_description,
+			_inventory
+		);
+	}
+
+	function purchaseItem(uint256 _itemId, uint256 _quantity) external payable {
+		Item storage item = items[_itemId];
+		require(item.isActive, "Item is not active");
+		require(item.inventory >= _quantity, "Not enough inventory");
+		require(msg.value >= item.price * _quantity, "Insufficient payment");
+
+		item.inventory -= _quantity;
+		address storeOwner = stores[item.storeId].owner;
+
+		// Transfer funds to store owner
+		(bool sent, ) = payable(storeOwner).call{ value: msg.value }("");
+		require(sent, "Failed to send Ether");
+
+		emit ItemPurchased(_itemId, msg.sender, _quantity);
+	}
+
+	function toggleItemActive(uint256 _itemId) external {
+		require(
+			stores[items[_itemId].storeId].owner == msg.sender,
+			"Not the store owner"
+		);
+		items[_itemId].isActive = !items[_itemId].isActive;
+	}
 }
