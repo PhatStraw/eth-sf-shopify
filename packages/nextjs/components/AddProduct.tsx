@@ -29,7 +29,6 @@ const AddProduct: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Add New Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block mb-1">
@@ -41,7 +40,7 @@ const AddProduct: React.FC = () => {
             name="name"
             value={product.name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border rounded bg-white text-black"
             required
           />
         </div>
@@ -54,7 +53,7 @@ const AddProduct: React.FC = () => {
             name="description"
             value={product.description}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border rounded bg-white text-black"
           ></textarea>
         </div>
         <div>
@@ -67,7 +66,7 @@ const AddProduct: React.FC = () => {
             name="price"
             value={product.price}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border rounded bg-white text-black"
             required
             min="0"
             step="0.01"
@@ -83,7 +82,7 @@ const AddProduct: React.FC = () => {
             name="image"
             value={product.image}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 border rounded bg-white text-black"
           />
         </div>
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">

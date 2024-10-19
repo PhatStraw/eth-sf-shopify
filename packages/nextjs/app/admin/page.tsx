@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useStore } from "../../context/StoreContext";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import AddProduct from "~~/components/AddProduct";
@@ -36,12 +37,12 @@ const AdminPage: React.FC = () => {
             {storeUrl}
           </a>
         </p>
-        <button
-          onClick={() => navigator.clipboard.writeText(storeUrl)}
+        <Link
+          href={`/store/${currentUser.store.id}`}
           className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
         >
           Copy Store URL
-        </button>
+        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className=" shadow-md rounded-lg p-6">

@@ -23,7 +23,7 @@ const ProductManagement: React.FC = () => {
     <div>
       <table className="w-full">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="">
             <th className="text-left p-2">Name</th>
             <th className="text-left p-2">Price</th>
             <th className="text-left p-2">Actions</th>
@@ -68,7 +68,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4 bg-gray-100 p-4 rounded">
+    <form onSubmit={handleSubmit} className="mt-4 p-4 rounded">
       <h3 className="text-lg font-semibold mb-2">Edit Product</h3>
       <div className="mb-2">
         <label htmlFor="name" className="block">
@@ -80,7 +80,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
           name="name"
           value={editedProduct.name}
           onChange={handleChange}
-          className="w-full px-2 py-1 border rounded"
+          className="w-full px-2 py-1 border rounded bg-white text-black"
           required
         />
       </div>
@@ -93,7 +93,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
           name="description"
           value={editedProduct.description}
           onChange={handleChange}
-          className="w-full px-2 py-1 border rounded"
+          className="w-full px-2 py-1 border rounded bg-white text-black"
         ></textarea>
       </div>
       <div className="mb-2">
@@ -106,7 +106,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
           name="price"
           value={editedProduct.price}
           onChange={handleChange}
-          className="w-full px-2 py-1 border rounded"
+          className="w-full px-2 py-1 border rounded bg-white text-black"
           required
           min="0"
           step="0.01"
@@ -122,7 +122,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
           name="image"
           value={editedProduct.image}
           onChange={handleChange}
-          className="w-full px-2 py-1 border rounded"
+          className="w-full px-2 py-1 border rounded bg-white text-black"
         />
       </div>
       <div className="flex justify-end">
