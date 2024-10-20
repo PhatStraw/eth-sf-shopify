@@ -14,6 +14,7 @@ import { useStore } from "~~/context/StoreContext";
 const HomePage: NextPage = () => {
   const { user } = useDynamicContext();
   const { login } = useStore();
+
   useEffect(() => {
     if (user) {
       login("kev@gmail.com", "1235464");

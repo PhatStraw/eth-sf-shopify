@@ -33,13 +33,14 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  defaultNetwork: "localhost",
+  defaultNetwork: "testnet",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
       default: 0,
     },
   },
+
   networks: {
     // View the networks that are pre-configured.
     // If the network you are looking for is not here you can add new network settings
@@ -51,7 +52,7 @@ const config: HardhatUserConfig = {
     },
     testnet: {
       url: "https://testnet.evm.nodes.onflow.org",
-      accounts: [process.env.FLOW_DEPLOYER!], // In practice, this should come from an environment variable and not be commited
+      accounts: [deployerPrivateKey], // In practice, this should come from an environment variable and not be commited
       gas: 500000, // Example gas limit
     },
     mainnet: {
@@ -129,7 +130,19 @@ const config: HardhatUserConfig = {
   },
   // configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: `${etherscanApiKey}`,
+    apiKey: {
+      testnet: "empty",
+    },
+    customChains: [
+      {
+        network: "testnet",
+        chainId: 545,
+        urls: {
+          apiURL: "https://evm-testnet.flowscan.io/api",
+          browserURL: "https://evm-testnet.flowscan.io",
+        },
+      },
+    ],
   },
   // configuration for etherscan-verify from hardhat-deploy plugin
   verify: {

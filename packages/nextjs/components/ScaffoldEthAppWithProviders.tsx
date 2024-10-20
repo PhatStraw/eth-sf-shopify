@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ChatBot from "./ChatBot";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+// import { FlowWalletConnectors } from "@dynamic-labs/flow";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -57,7 +58,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
     <WagmiProvider config={wagmiConfig}>
       <DynamicContextProvider
         settings={{
-          environmentId: "57bca674-bac8-42ff-9645-bba010273e3f",
+          environmentId: "40b79e9a-cf18-495d-8d6c-567f20f65dc5",
           walletConnectors: [EthereumWalletConnectors],
         }}
       >

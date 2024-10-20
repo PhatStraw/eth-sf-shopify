@@ -10,7 +10,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [chains.flowTestnet],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
@@ -19,7 +19,7 @@ const scaffoldConfig = {
   // You can get your Alchemy's default API key at https://dashboard.alchemyapi.io
   // It's recommended to store it in an env variable:
   // .env.local for local testing, and in the Vercel/system env config for live apps.
-  alchemyApiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "",
+  alchemyApiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "iDFf5eN_U6n_FW4zKq2U8n0M6feutYwx",
 
   // This is ours WalletConnect's default project ID.
   // You can get your own at https://cloud.walletconnect.com

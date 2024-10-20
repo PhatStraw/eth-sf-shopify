@@ -1,9 +1,9 @@
-import { wagmiConnectors } from "./wagmiConnectors";
-import { Chain, createClient, fallback, http } from "viem";
-import { hardhat, mainnet } from "viem/chains";
-import { createConfig } from "wagmi";
+import { injected } from "@wagmi/connectors";
+import { createConfig, http } from "@wagmi/core";
+import { flowTestnet } from "@wagmi/core/chains";
+import { Chain } from "viem";
+import { mainnet } from "viem/chains";
 import scaffoldConfig from "~~/scaffold.config";
-import { getAlchemyHttpUrl } from "~~/utils/scaffold-eth";
 
 const { targetNetworks } = scaffoldConfig;
 
@@ -13,21 +13,9 @@ export const enabledChains = targetNetworks.find((network: Chain) => network.id 
   : ([...targetNetworks, mainnet] as const);
 
 export const wagmiConfig = createConfig({
-  chains: enabledChains,
-  connectors: wagmiConnectors,
-  ssr: true,
-  client({ chain }) {
-    const alchemyHttpUrl = getAlchemyHttpUrl(chain.id);
-    const rpcFallbacks = alchemyHttpUrl ? [http(alchemyHttpUrl), http()] : [http()];
-
-    return createClient({
-      chain,
-      transport: fallback(rpcFallbacks),
-      ...(chain.id !== (hardhat as Chain).id
-        ? {
-            pollingInterval: scaffoldConfig.pollingInterval,
-          }
-        : {}),
-    });
+  chains: [flowTestnet],
+  connectors: [injected()],
+  transports: {
+    [flowTestnet.id]: http(),
   },
 });
