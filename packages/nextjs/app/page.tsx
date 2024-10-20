@@ -6,8 +6,8 @@ import Link from "next/link";
 // import { DynamicContextProvider, UserProfile, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import type { NextPage } from "next";
-import { useStore } from "~~/context/StoreContext";
 import Cards from "~~/components/ui/Cards";
+import { useStore } from "~~/context/StoreContext";
 
 // import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 // import { Address } from "~~/components/scaffold-eth";
@@ -24,12 +24,6 @@ const HomePage: NextPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
       <main className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-5xl font-bold mb-8 text-blue-800">Welcome to ETHical Shops</h1>
-        {!user && <p className="mb-4">Please log in to create your store and start selling!</p>}
-      {user && (
-        <Link href="/admin" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
-          Create Your Store
-        </Link>
-      )}
         <p className="text-xl mb-12 text-gray-700">
           The decentralized marketplace for ethical and sustainable businesses
         </p>
@@ -38,7 +32,7 @@ const HomePage: NextPage = () => {
             <h2 className="text-2xl font-semibold mb-4 text-blue-600">For Shop Owners</h2>
             <p className="mb-4">Create and manage your ethical shop with ease using blockchain technology</p>
             <Link
-              href="/create-shop"
+              href="/admin"
               className="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
             >
               Create Your Shop

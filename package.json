@@ -46,6 +46,8 @@
   "dependencies": {
     "@dynamic-labs/ethereum": "^3.4.2",
     "@dynamic-labs/sdk-react-core": "^3.4.2",
+    "@google/generative-ai": "^0.21.0",
+    "tuskscript": "^0.0.3",
     "viem": "^2.21.29"
   }
 }
