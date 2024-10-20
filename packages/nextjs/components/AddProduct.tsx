@@ -170,7 +170,7 @@ const Product: any = () => {
         </div>
         <div>
           {/* @ts-ignore */}
-          {product.image && displayUpload(product.image.info, product.image.media_type)}
+          {product.image && product.image.info && displayUpload(product.image.info, product.image.media_type)}
           <label htmlFor="image" className="block mb-1">
             Select Image
           </label>
