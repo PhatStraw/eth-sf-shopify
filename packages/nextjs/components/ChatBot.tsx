@@ -81,7 +81,7 @@ const ChatBot = () => {
           </div>
         </div>
       ) : (
-        <div className="rounded-full bg-white/50 p-2 hover:cursor-pointer" onClick={() => setChatOpen(!chatOpen)}>
+        <div className="rounded-full bg-blue-500/30 p-2 hover:cursor-pointer" onClick={() => setChatOpen(!chatOpen)}>
           <Image src="/Chat Robot Icon.png" alt="logo" width={50} height={50} />
         </div>
       )}
