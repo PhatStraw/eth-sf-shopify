@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+// import { Kdam_Thmor_Pro } from "next/font/google";
 import Link from "next/link";
 // import { DynamicContextProvider, UserProfile, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center">
-      <h1 className="text-4xl font-bold mb-6">Welcome to Shopify Clone</h1>
+      <h1 className="text-6xl font-bold mb-6 font-kdam-thmor-pro ">Welcome to Shopify Clone</h1>
       {!user && <p className="mb-4">Please log in to create your store and start selling!</p>}
       {user && (
         <Link href="/admin" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">

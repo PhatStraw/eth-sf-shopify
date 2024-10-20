@@ -5,6 +5,40 @@ import Image from "next/image";
 
 const ChatBot = () => {
   const [chatOpen, setChatOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState<string[]>([]);
+
+  const sendMessage = async () => {
+    if (message.trim() === "") return;
+
+    // Add user message to chat history
+    setChatHistory(prev => [...prev, `User: ${message}`]);
+
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      const data = await response.json();
+
+      // Add bot response to chat history
+      setChatHistory(prev => [...prev, `Bot: ${data.response}`]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setChatHistory(prev => [...prev, "Bot: Sorry, I couldn't process your request."]);
+    }
+
+    setMessage("");
+  };
+
   return (
     <div>
       {chatOpen ? (
@@ -22,9 +56,27 @@ const ChatBot = () => {
                 X
               </div>
             </div>
-            <div className="flex-grow p-4 overflow-y-auto">{/* Chat messages will go here */}</div>
-            <div className="p-4 border-t">
-              <input type="text" placeholder="Type your message..." className="w-full p-2 border rounded-lg" />
+            <div className="flex-grow p-4 overflow-y-auto">
+              {chatHistory.map((msg, index) => (
+                <div key={index} className="mb-2">
+                  {msg}
+                </div>
+              ))}
+            </div>
+            <div className="p-4 border-t flex">
+              <input
+                type="text"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                placeholder="Type your message..."
+                className="w-9/12 p-2 border rounded-lg"
+              />
+              <button
+                onClick={sendMessage}
+                className="ml-2 w-3/12 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+              >
+                Send
+              </button>
             </div>
           </div>
         </div>
