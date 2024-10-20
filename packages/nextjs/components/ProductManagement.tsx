@@ -3,7 +3,7 @@ import { useStore } from "../context/StoreContext";
 import { Product } from "../type";
 
 const ProductManagement: React.FC = () => {
-  const { products, addProduct } = useStore();
+  const { products, updateProduct } = useStore();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const handleEdit = (product: Product) => {
@@ -11,7 +11,7 @@ const ProductManagement: React.FC = () => {
   };
 
   const handleSave = (updatedProduct: Product) => {
-    addProduct(updatedProduct);
+    updateProduct(updatedProduct);
     setEditingProduct(null);
   };
 

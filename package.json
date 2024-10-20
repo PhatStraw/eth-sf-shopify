@@ -42,5 +42,9 @@
   },
   "engines": {
     "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "tuskscript": "^0.0.3"
   }
 }

@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { useStore } from "~~/context/StoreContext";
 
-// function getSuiUrl(suiRef: string) {
-//   const suiBaseUrl = "https://suiscan.xyz/devnet/object";
-//   return `${suiBaseUrl}/${suiRef}`;
-// }
-
 async function uploadFile(file: File, numEpochs: number, basePublisherUrl: string) {
   return await fetch(`${basePublisherUrl}/v1/store?epochs=${numEpochs}`, {
     method: "PUT",
@@ -64,11 +59,10 @@ const Product: any = () => {
           "An error occurred while uploading. Check the browser console and ensure that  the aggregator and publisher URLs are correct.",
         );
       });
-
-    // Return false to cancel form submission.
+    
     return false;
   };
-
+        
   /**
    * Display the result of uploading the file to Walrus.
    */
@@ -77,12 +71,10 @@ const Product: any = () => {
     // - newlyCreated for blobs that have been uploaded for the first time,
     //   or whose duration has been extended.
     // - alreadyCertified for blobs that have already been uploaded and certified.
-
     const SUI_NETWORK = "testnet";
     const SUI_VIEW_TX_URL = `https://suiscan.xyz/${SUI_NETWORK}/tx`;
     const SUI_VIEW_OBJECT_URL = `https://suiscan.xyz/${SUI_NETWORK}/object`;
     let info;
-
     if ("alreadyCertified" in storage_info) {
       info = {
         status: "Already certified",
@@ -107,7 +99,6 @@ const Product: any = () => {
 
     // The URL used to download and view the blob.
     const blobUrl = `https://aggregator-devnet.walrus.space/v1/${info.blobId}`;
-
     const isImage = media_type.startsWith("image");
     // Create the HTML entry in the page for the uploaded blob.
     //
@@ -179,8 +170,8 @@ const Product: any = () => {
             id="image"
             name="image"
             accept="image/*"
-            onChange={handleImageChange} // Update to handle image selection
             className="w-full px-3 py-2 border rounded bg-white text-black"
+            onChange={handleImageChange}
           />
         </div>
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">

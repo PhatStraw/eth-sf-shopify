@@ -1994,6 +1994,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google/generative-ai@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "@google/generative-ai@npm:0.21.0"
+  checksum: 91345a8399b5e71382193d0eac47a4b264613a9d7e48a431290b523e3fbb44a207a33bdead304f181987e5a0127a84168c4e21cf461c1087cd3b0ebc5125d13d
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -16264,8 +16271,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
+    "@google/generative-ai": ^0.21.0
     husky: ^8.0.1
     lint-staged: ^13.0.3
+    tuskscript: ^0.0.3
   languageName: unknown
   linkType: soft
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ChatBot from "./ChatBot";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
@@ -11,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import { WagmiProvider } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
+import { SwitchTheme } from "~~/components/SwitchTheme";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useInitializeNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
@@ -22,7 +24,11 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
     <>
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="relative flex flex-col flex-1">{children}</main>
+        <main className="relative flex flex-col flex-1 bg-blue-100">{children}</main>
+        <div className="fixed bottom-4 right-4 flex flex-col items-end space-y-2 z-50">
+          <ChatBot />
+          <SwitchTheme />
+        </div>
         <Footer />
       </div>
       <Toaster />
@@ -51,7 +57,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
     <WagmiProvider config={wagmiConfig}>
       <DynamicContextProvider
         settings={{
-          environmentId: "40b79e9a-cf18-495d-8d6c-567f20f65dc5",
+          environmentId: "57bca674-bac8-42ff-9645-bba010273e3f",
           walletConnectors: [EthereumWalletConnectors],
         }}
       >
