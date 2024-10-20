@@ -15,7 +15,12 @@ const ChatBot = () => {
                 <Image src="/Chat Robot Icon.png" alt="logo" width={50} height={50} />
                 <div className="p-4 text-white font-bold w-full">Chat Bot</div>
               </div>
-              <div className="py-2 px-3 text-white font-bold hover:cursor-pointer rounded-full bg-white/50">X</div>
+              <div
+                className="py-2 px-3 text-white font-bold hover:cursor-pointer rounded-full bg-white/50"
+                onClick={() => setChatOpen(!chatOpen)}
+              >
+                X
+              </div>
             </div>
             <div className="flex-grow p-4 overflow-y-auto">{/* Chat messages will go here */}</div>
             <div className="p-4 border-t">
