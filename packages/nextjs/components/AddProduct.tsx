@@ -18,9 +18,8 @@ async function uploadFile(file: File, numEpochs: number, basePublisherUrl: strin
     }
   });
 }
-const Product: any = () => {
-  // const AddProduct: React.FC<{ onProductAdded: () => void }> = ({ onProductAdded }) =>
 
+const Product: any = () => {
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -44,7 +43,6 @@ const Product: any = () => {
         image: product.image as string,
       });
       setProduct({ name: "", description: "", price: "", image: {} });
-      // onProductAdded();
     }
   };
 
@@ -61,9 +59,10 @@ const Product: any = () => {
           "An error occurred while uploading. Check the browser console and ensure that  the aggregator and publisher URLs are correct.",
         );
       });
-    // Return false to cancel form submission.
+    
     return false;
   };
+        
   /**
    * Display the result of uploading the file to Walrus.
    */
@@ -97,6 +96,7 @@ const Product: any = () => {
     } else {
       throw Error("Unhandled successful response!");
     }
+
     // The URL used to download and view the blob.
     const blobUrl = `https://aggregator-devnet.walrus.space/v1/${info.blobId}`;
     const isImage = media_type.startsWith("image");
