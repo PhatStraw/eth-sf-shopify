@@ -9,7 +9,7 @@ export const Header = () => {
   const { currentUser } = useStore();
 
   return (
-    <div className="sticky top-0 navbar bg-blue-300 shadow-md px-4 flex justify-between items-center z-10">
+    <div className="sticky top-0 navbar bg-blue-200/90 px-4 flex justify-between items-center z-10">
       <div className="flex items-center">
         <div className="lg:hidden">
           {/* <label tabIndex={0} className="btn btn-ghost" onClick={() => setIsDrawerOpen(prev => !prev)}>

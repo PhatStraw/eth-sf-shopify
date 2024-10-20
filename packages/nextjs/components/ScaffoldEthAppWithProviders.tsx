@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ChatBot from "./ChatBot";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
@@ -23,6 +24,9 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="relative flex flex-col flex-1 bg-blue-100">{children}</main>
+        <div className="bg-blue-100 flex justify-end p-4">
+          <ChatBot />
+        </div>
         <Footer />
       </div>
       <Toaster />
